@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aikofarm | Online Catfish Store</title>
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+    }
+    header, footer {
+      background-color: #0a3d62;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+    nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .hero {
+      background: url('https://via.placeholder.com/1100x300?text=Aikofarm+Catfish+Farm') no-repeat center center;
+      background-size: cover;
+      height: 300px;
+    }
+    .section {
+      background: white;
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .btn {
+      background: #079992;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover {
+      background: #38ada9;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    form button {
+      background-color: #0a3d62;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #145b8d;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Aikofarm</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#booking">Booking</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero" id="home"></div>
+
+  <div class="container">
+
+    <div class="section" id="about">
+      <h2>About Us</h2>
+      <p>Aikofarm is a reliable online catfish farm offering high-quality catfish supplies to hotels, supermarkets, and individual customers. Our farm combines experience, innovation, and dedication to sustainability to ensure the best for our clients.</p>
+    </div>
+
+    <div class="section" id="services">
+      <h2>Our Services</h2>
+      <ul>
+        <li>Fresh catfish supply</li>
+        <li>Bulk orders for hotels & supermarkets</li>
+        <li>Doorstep delivery</li>
+        <li>Custom fish size on request</li>
+      </ul>
+      <a href="#booking" class="btn">Book Now</a>
+    </div>
+
+    <div class="section" id="booking">
+      <h2>Book Your Catfish</h2>
+      <form id="bookingForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="text" id="quantity" placeholder="Quantity in KG" required>
+        <textarea id="message" rows="4" placeholder="Any specific request?"></textarea>
+        <button type="button" onclick="makePayment()">Pay & Book</button>
+      </form>
+    </div>
+
+    <div class="section" id="contact">
+      <h2>Contact Us</h2>
+      <p><strong>Phone:</strong> +234 901 234 5678</p>
+      <p><strong>Email:</strong> contact@aikofarm.com</p>
+      <p><strong>Address:</strong> Aikofarm Street, Port Harcourt, Nigeria</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Aikofarm. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function makePayment() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const amount = document.getElementById('quantity').value * 1000;
+
+      FlutterwaveCheckout({
+        public_key: "FLWPUBK_TEST-xxxxxxxxxxxxxxxxxxxxx-X", // Replace with your public key
+        tx_ref: "aikofarm-" + Date.now(),
+        amount: amount,
+        currency: "NGN",
+        payment_options: "card,ussd,banktransfer",
+        customer: {
+          email: email,
+          name: name,
+        },
+        customizations: {
+          title: "Aikofarm Catfish Booking",
+          description: "Catfish order payment",
+          logo: "https://via.placeholder.com/150"
+        },
+        callback: function (data) {
+          alert("Payment complete! Ref: " + data.transaction_id);
+        },
+        onclose: function() {
+          alert("Payment was not completed.");
+        },
+      });
+    }
+  </script>
+
+</body>
+</html>
